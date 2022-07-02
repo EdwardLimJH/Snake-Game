@@ -11,7 +11,7 @@ class Snake:
                      SNAKE_BODY_SIZE)]
         self.block_size = SNAKE_BODY_SIZE
         self.vertical = 0
-        self.horizontal = 1
+        self.horizontal = 0
     
     def get_body(self):
         return self.body
@@ -37,130 +37,70 @@ class Snake:
     def create_snake_block(self,x,y):
         return pygame.Rect(x, y, self.get_block_size(), self.get_block_size())
 
-    def move_left(self,apple):
-        if len(self.get_body()) == 1:
-            self.set_vertical(0)
-            self.set_horizontal(-1)
-            head = self.get_body()[0]
-            new_head = self.create_snake_block(head.x + self.get_horizontal()*self.get_block_size(),
-                                        head.y)
-            self.set_body([new_head,head])
-            if self.eat_apple(apple):
-                apple.spawn(self)
-            else:
-                shortened_body = self.get_body()
-                shortened_body.pop(-1)
-                self.set_body(shortened_body)
-        else:
-            if self.get_horizontal() == 1:
-                pass
-            else:
-                self.set_vertical(0)
-                self.set_horizontal(-1)
-                body = self.get_body()
-                head = body[0]
-                new_head = self.create_snake_block(head.x + self.get_horizontal()*self.get_block_size(),head.y)
-                self.set_body([new_head]+body)
-                if not self.eat_apple(apple):
-                    shortened_body = self.get_body()
-                    shortened_body.pop(-1)
-                    self.set_body(shortened_body)
-                else:
-                    apple.spawn(self)
+    def set_directions(self,horizontal,vertical):
+        self.set_horizontal(horizontal)
+        self.set_vertical(vertical)
 
-    def move_right(self,apple):
-        if len(self.get_body()) == 1:
-            self.set_vertical(0)
-            self.set_horizontal(1)
-            head = self.get_body()[0]
-            new_head = self.create_snake_block(head.x + self.get_horizontal()*self.get_block_size(),
-                                        head.y)
-            self.set_body([new_head,head])
+    def add_head(self):
+        old_body = self.get_body()
+        head = old_body[0]
+        new_head = self.create_snake_block(head.x + self.get_horizontal()*self.get_block_size(),
+                                    head.y + self.get_vertical()*self.get_block_size())
+        self.set_body([new_head] + old_body)
+
+    def remove_tail(self):
+        old_body = self.get_body()
+        old_body.pop(-1)
+        self.set_body(old_body)
+
+    def move_left(self,apple):
+        if self.get_horizontal() == 1 and len(self.get_body()) != 1:
+            pass
+        else:
+            self.set_directions(-1,0)
+            self.add_head()
+
             if self.eat_apple(apple):
                 apple.spawn(self)
             else:
-                shortened_body = self.get_body()
-                shortened_body.pop(-1)
-                self.set_body(shortened_body)
+                self.remove_tail()
+
+    def move_right(self, apple):
+        if self.get_horizontal() == -1 and len(self.get_body()) != 1:
+            pass
         else:
-            if self.get_horizontal() == -1:
-                pass
+            self.set_directions(1,0)
+            self.add_head()
+
+            if self.eat_apple(apple):
+                apple.spawn(self)
             else:
-                self.set_vertical(0)
-                self.set_horizontal(1)
-                body = self.get_body()
-                head = body[0]
-                new_head = self.create_snake_block(head.x + self.get_horizontal()*self.get_block_size(),head.y)
-                self.set_body([new_head]+body)
-                if not self.eat_apple(apple):
-                    shortened_body = self.get_body()
-                    shortened_body.pop(-1)
-                    self.set_body(shortened_body)
-                else:
-                    apple.spawn(self)
+                self.remove_tail()
 
 
     def move_up(self,apple):
-        if len(self.get_body()) == 1:
-            self.set_vertical(-1)
-            self.set_horizontal(0)
-            head = self.get_body()[0]
-            new_head = self.create_snake_block(head.x,
-                                        head.y + self.get_vertical()*self.get_block_size())
-            self.set_body([new_head,head])
+        if self.get_vertical() == 1 and len(self.get_body()) != 1:
+            pass
+        else:
+            self.set_directions(0,-1)
+            self.add_head()
+
             if self.eat_apple(apple):
                 apple.spawn(self)
             else:
-                shortened_body = self.get_body()
-                shortened_body.pop(-1)
-                self.set_body(shortened_body)
-        else:
-            if self.get_vertical() == 1:
-                pass
-            else:
-                self.set_vertical(-1)
-                self.set_horizontal(0)
-                body = self.get_body()
-                head = body[0]
-                new_head = self.create_snake_block(head.x, head.y + self.get_vertical()*self.get_block_size())
-                self.set_body([new_head]+body)
-                if not self.eat_apple(apple):
-                    shortened_body = self.get_body()
-                    shortened_body.pop(-1)
-                    self.set_body(shortened_body)
-                else:
-                    apple.spawn(self)
+                self.remove_tail()
 
     def move_down(self,apple):
-        if len(self.get_body()) == 1:
-            self.set_vertical(1)
-            self.set_horizontal(0)
-            head = self.get_body()[0]
-            new_head = self.create_snake_block(head.x,
-                                        head.y + self.get_vertical()*self.get_block_size())
-            self.set_body([new_head,head])
+        if self.get_vertical() == -1 and len(self.get_body()) != 1:
+            pass
+        else:
+            self.set_directions(0,1)
+            self.add_head()
+
             if self.eat_apple(apple):
                 apple.spawn(self)
             else:
-                shortened_body = self.get_body()
-                shortened_body.pop(-1)
-                self.set_body(shortened_body)
-        else:
-            if self.get_vertical() == -1:
-                pass
-            else:
-                self.set_vertical(1)
-                self.set_horizontal(0)
-                body = self.get_body()
-                head = body[0]
-                new_head = self.create_snake_block(head.x, head.y + self.get_vertical()*self.get_block_size())
-                self.set_body([new_head]+body)
-                if not self.eat_apple(apple):
-                    shortened_body = self.get_body()
-                    shortened_body.pop(-1)
-                    self.set_body(shortened_body)
-                else:
-                    apple.spawn(self)
+                self.remove_tail()
 
     def eat_apple(self,apple):
         apple_rect = apple.get_body()
