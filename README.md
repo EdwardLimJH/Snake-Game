@@ -11,5 +11,5 @@ Pygame package is also required. Type in the following code on on terminal to in
 pip install pygame
 
 Acknowledgements:
-The assets used in this game were taken from https://kronbits.itch.io/matriax-free-assets .
-
+The background and apple assets used in the game were taken from https://kronbits.itch.io/matriax-free-assets .
+The snake asset used in the game was taken from https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.pygame.org%2Fftp%2Fpygame-head-party.png&imgrefurl=https%3A%2F%2Fwww.pygame.org%2F&tbnid=Jfm8oNQbWKcU5M&vet=12ahUKEwiUiuGxsPP4AhU2_DgGHQVRDv4QMygJegUIARDvAQ..i&docid=AtBnAJ5UvCVGoM&w=450&h=450&q=pygame&ved=2ahUKEwiUiuGxsPP4AhU2_DgGHQVRDv4QMygJegUIARDvAQ .
