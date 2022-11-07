@@ -8,9 +8,9 @@ python main.py
 Dependencies:
 Do ensure that all 3 code files, main.py, objects.py, constant.py are downloaded with the assets folder in the same directory.
 Pygame package is also required. Type in the following code on on terminal to install pygame if you do not have it installed.
-'''
+```
 pip install pygame
-'''
+```
 
 Acknowledgements:
 The background and apple assets used in the game were taken from https://kronbits.itch.io/matriax-free-assets .
